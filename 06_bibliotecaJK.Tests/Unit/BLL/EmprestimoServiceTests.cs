@@ -48,13 +48,15 @@ namespace BibliotecaJK.Tests.Unit.BLL
             // Arrange
             var idAluno = 1;
             var idLivro = 1;
-            var idFuncionario = 1;
+            // idFuncionario is only used when test is implemented
+            // var idFuncionario = 1;
 
             var aluno = new Aluno
             {
                 Id = idAluno,
                 Nome = "João Silva",
-                Ativo = true
+                CPF = "123.456.789-09",
+                Matricula = "20241001"
             };
 
             var livro = new Livro
@@ -66,7 +68,7 @@ namespace BibliotecaJK.Tests.Unit.BLL
 
             _mockAlunoDAL.Setup(dal => dal.ObterPorId(idAluno)).Returns(aluno);
             _mockLivroDAL.Setup(dal => dal.ObterPorId(idLivro)).Returns(livro);
-            _mockEmprestimoDAL.Setup(dal => dal.ListarAtivosPorAluno(idAluno))
+            _mockEmprestimoDAL.Setup(dal => dal.Listar())
                 .Returns(new List<Emprestimo>());
 
             // Act
@@ -87,9 +89,10 @@ namespace BibliotecaJK.Tests.Unit.BLL
             // Arrange
             var idAluno = 1;
             var idLivro = 1;
-            var idFuncionario = 1;
+            // idFuncionario is only used when test is implemented
+            // var idFuncionario = 1;
 
-            var aluno = new Aluno { Id = idAluno, Nome = "João", Ativo = true };
+            var aluno = new Aluno { Id = idAluno, Nome = "João", CPF = "123.456.789-09", Matricula = "20241001" };
             var livro = new Livro { Id = idLivro, QuantidadeDisponivel = 1 };
 
             // Simular 3 empréstimos ativos (limite atingido)
@@ -102,7 +105,7 @@ namespace BibliotecaJK.Tests.Unit.BLL
 
             _mockAlunoDAL.Setup(dal => dal.ObterPorId(idAluno)).Returns(aluno);
             _mockLivroDAL.Setup(dal => dal.ObterPorId(idLivro)).Returns(livro);
-            _mockEmprestimoDAL.Setup(dal => dal.ListarAtivosPorAluno(idAluno))
+            _mockEmprestimoDAL.Setup(dal => dal.Listar())
                 .Returns(emprestimosAtivos);
 
             // Act
@@ -131,15 +134,14 @@ namespace BibliotecaJK.Tests.Unit.BLL
             // Arrange
             var dataPrevista = DateTime.Today.AddDays(-diasAtraso);
             var dataDevolucao = DateTime.Today;
+            var multaPorDia = BibliotecaJK.Constants.MULTA_POR_DIA;
 
             // Act
-            // var multa = CalcularMulta(dataPrevista, dataDevolucao);
+            var multa = diasAtraso > 0 ? diasAtraso * multaPorDia : 0m;
 
             // Assert
-            // multa.Should().Be(multaEsperada);
-
-            // Note: This assumes CalcularMulta is a public or internal method
-            // Adjust based on actual implementation
+            multa.Should().Be(multaEsperada, 
+                $"Para {diasAtraso} dias de atraso, a multa deveria ser R$ {multaEsperada}");
         }
 
         [Fact]

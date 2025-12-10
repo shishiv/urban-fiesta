@@ -16,16 +16,18 @@ namespace BibliotecaJK.Forms
     {
         private readonly Funcionario _funcionarioLogado;
         private readonly FuncionarioDAL _funcionarioDAL;
-        private DataGridView dgvFuncionarios;
-        private TextBox txtNome;
-        private TextBox txtCPF;
-        private TextBox txtCargo;
-        private TextBox txtLogin;
-        private TextBox txtSenha;
-        private ComboBox cboPerfil;
-        private Button btnSalvar;
-        private Button btnNovo;
-        private Button btnExcluir;
+        
+        // Controls are initialized in InitializeComponent() - using null! to suppress nullable warnings
+        private DataGridView dgvFuncionarios = null!;
+        private TextBox txtNome = null!;
+        private TextBox txtCPF = null!;
+        private TextBox txtCargo = null!;
+        private TextBox txtLogin = null!;
+        private TextBox txtSenha = null!;
+        private ComboBox cboPerfil = null!;
+        private Button btnSalvar = null!;
+        private Button btnNovo = null!;
+        private Button btnExcluir = null!;
         private int? _idFuncionarioSelecionado = null;
 
         public FormCadastroFuncionario(Funcionario funcionarioLogado)
